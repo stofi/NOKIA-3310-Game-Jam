@@ -1,0 +1,120 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://photoshop-foreground-background-gradient.jpg" type="Texture" id=1]
+[ext_resource path="res://bwmap2.png" type="TextureArray" id=2]
+[ext_resource path="res://TileMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://start0.png" type="Texture" id=6]
+[ext_resource path="res://start1.png" type="Texture" id=7]
+[ext_resource path="res://end0.png" type="Texture" id=8]
+[ext_resource path="res://end1.png" type="Texture" id=9]
+[ext_resource path="res://World.gd" type="Script" id=10]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform sampler2DArray shades;
+uniform float layers = 8.0;
+uniform vec2 view_size = vec2(84.0,48.0);
+uniform float layer_size = 4.0;
+
+uniform vec4 white : hint_color = vec4(0.78, 0.94, 0.847, 1.0);
+uniform vec4 black : hint_color = vec4(0.262, 0.321, 0.239, 1.0);
+
+float r(vec2 p) {
+	return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+vec4 getNokiaColor(vec4 color){
+	float gray = (color.r + color.b + color.g) / 3.0;
+	color = gray > 0.5 ? white : black;
+	return color;
+}
+
+void fragment(){
+	vec4 pixel = texture(SCREEN_TEXTURE, SCREEN_UV);
+	float gray = (pixel.r + pixel.b + pixel.g) / 3.0;
+	float step = floor(gray * layers);
+	vec2 sample_uv = SCREEN_UV / (layer_size/view_size);
+	vec4 sample = textureLod(shades, vec3(sample_uv, step), 1.0);
+
+	COLOR = getNokiaColor(sample);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/layers = 9.0
+shader_param/view_size = Vector2( 84, 48 )
+shader_param/layer_size = 4.0
+shader_param/white = Color( 0.78, 0.94, 0.847, 1 )
+shader_param/black = Color( 0.262, 0.321, 0.239, 1 )
+shader_param/shades = ExtResource( 2 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 10 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 84.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 25, 8 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="photoshop-foreground-background-gradient" type="Sprite" parent="."]
+visible = false
+rotation = -0.000343485
+scale = Vector2( 0.131409, 0.112199 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="TileMap" parent="." instance=ExtResource( 3 )]
+
+[node name="Start" type="AnimatedSprite" parent="."]
+position = Vector2( 66, 18 )
+frames = SubResource( 1 )
+frame = 1
+speed_scale = 0.2
+playing = true
+
+[node name="Goal" type="AnimatedSprite" parent="."]
+position = Vector2( 10, 2 )
+frames = SubResource( 2 )
+frame = 1
+speed_scale = 0.2
+playing = true
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 66, 34 )
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 18, 10 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 4 )
+margin_right = 84.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
