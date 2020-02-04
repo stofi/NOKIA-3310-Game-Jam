@@ -25,5 +25,5 @@ func get_input():
 	if Input.is_action_just_pressed('move_up'):
 		step = Vector2(0,-1)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_input()

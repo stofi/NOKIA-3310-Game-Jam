@@ -9,11 +9,7 @@ var step_count = 0
 
 func _ready():
 	player = get_node(player_reference)
-	print(player)
 	tileset = get_tileset()
-	_on_Player_moved()
-	pass # Replace with function body.
-
 	
 func _on_Player_moved():
 	steps.push_back(world_to_map(player.position))
@@ -41,7 +37,6 @@ func setCable():
 				tile_name += 'l'
 			Vector2.RIGHT:
 				tile_name += 'r'
-	
 	else:
 		current = steps[step_count-1]
 		prev = steps[step_count-2]
@@ -62,3 +57,4 @@ func setCable():
 			
 	tile_index = tileset.find_tile_by_name(tile_name)
 	set_cellv(prev, tile_index)
+	yield(get_tree(), "idle_frame")
