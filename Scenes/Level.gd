@@ -1,5 +1,9 @@
 extends Node2D
-# 19x10
+
+signal generated
+signal loose
+signal win
+
 const WIDTH = 21
 const HEIGHT = 12
 const MAX_OBSTACLES = int(floor((WIDTH-1)*(HEIGHT-1)/2))
@@ -13,6 +17,7 @@ onready var map = $Nav/Map
 
 var difficulty = 1
 var tileset = null
+var enabled = false
 
 func r0(n): # from 0 to n
 	return randi()%(n+1)
@@ -57,6 +62,7 @@ func generate():
 			remove_obstacle(obs_pos)
 			break
 	yield(get_tree(), "idle_frame")
+	emit_signal("generated")
 	
 func random_tile():
 	return Vector2(r(WIDTH-1),r(HEIGHT-1))
@@ -94,16 +100,9 @@ func remove_obstacle(pos):
 	map.update_bitmask_area(pos)
 
 func win():
-	difficulty += 1
-	reset_level()
-	generate()
 	emit_signal("win")
 
 func loose():
-	difficulty = 1
-	reset_level()
-	generate()
-	print("loose")
 	emit_signal("loose")
 
 func findpath(a,b):
@@ -116,3 +115,12 @@ func _on_Player_moved():
 		loose()
 	elif len(findpath(player.position, goal.position)) == 0:
 		loose()
+
+
+func disable():
+	player.disable()
+	enabled = false
+	
+func enable():
+	player.enable()
+	enabled = true

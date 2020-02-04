@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/bwmap2.png" type="TextureArray" id=2]
+[ext_resource path="res://Textures/splash.png" type="Texture" id=3]
+[ext_resource path="res://Textures/grad.jpg" type="Texture" id=4]
+[ext_resource path="res://Fonts/FSEX302-alt.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Scenes/World.gd" type="Script" id=10]
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="DynamicFont" id=3]
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform sampler2DArray shades;
@@ -36,8 +43,8 @@ void fragment(){
 }
 "
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 shader_param/layers = 9.0
 shader_param/view_size = Vector2( 84, 48 )
 shader_param/layer_size = 4.0
@@ -60,11 +67,41 @@ __meta__ = {
 
 [node name="Level" parent="." instance=ExtResource( 1 )]
 
+[node name="Splash" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Newlevel" type="Node2D" parent="."]
+visible = false
+
+[node name="Splash" type="Sprite" parent="Newlevel"]
+position = Vector2( 42.8793, 40.0557 )
+rotation = -1.46357
+scale = Vector2( 0.155769, 0.27874 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Newlevel"]
+margin_left = 10.8793
+margin_top = 0.0557022
+margin_right = 50.8793
+margin_bottom = 16.0557
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Level"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource( 4 )
+material = SubResource( 2 )
 margin_right = 84.0
 margin_bottom = 48.0
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+[connection signal="generated" from="Level" to="." method="_on_Level_generated"]
+[connection signal="loose" from="Level" to="." method="_on_Level_loose"]
+[connection signal="ready" from="Level" to="." method="_on_Level_ready"]
+[connection signal="win" from="Level" to="." method="_on_Level_win"]

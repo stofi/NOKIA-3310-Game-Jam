@@ -10,7 +10,7 @@
 [ext_resource path="res://Scenes/TileMap.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=12]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 5 ) ],
 "loop": true,
@@ -18,7 +18,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 7 ), ExtResource( 3 ) ],
 "loop": true,
@@ -43,7 +43,7 @@ player_reference = NodePath("../../Player")
 
 [node name="Start" type="AnimatedSprite" parent="."]
 position = Vector2( -18, 18 )
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 speed_scale = 0.2
 playing = true
 
@@ -52,7 +52,7 @@ position = Vector2( -18, 10 )
 
 [node name="Goal" type="AnimatedSprite" parent="."]
 position = Vector2( -18, 38 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 speed_scale = 0.2
 playing = true
 
