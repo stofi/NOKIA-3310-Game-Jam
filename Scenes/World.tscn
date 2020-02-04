@@ -41,8 +41,8 @@ shader = SubResource( 3 )
 shader_param/layers = 9.0
 shader_param/view_size = Vector2( 84, 48 )
 shader_param/layer_size = 4.0
-shader_param/white = Color( 0.78, 0.94, 0.847, 1 )
-shader_param/black = Color( 0.262, 0.321, 0.239, 1 )
+shader_param/white = Color( 0.262745, 0.321569, 0.239216, 1 )
+shader_param/black = Color( 0.780392, 0.941176, 0.847059, 1 )
 shader_param/shades = ExtResource( 2 )
 
 [node name="World" type="Node2D"]

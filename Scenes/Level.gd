@@ -1,7 +1,7 @@
 extends Node2D
 # 19x10
-const WIDTH = 20
-const HEIGHT = 11
+const WIDTH = 21
+const HEIGHT = 12
 const MAX_OBSTACLES = int(floor((WIDTH-1)*(HEIGHT-1)/2))
 
 onready var player = $Player
@@ -64,17 +64,17 @@ func random_tile():
 func place_goal():
 	var pos = Vector2(WIDTH-1, r(HEIGHT-1))
 	map.set_cellv(pos, tileset.find_tile_by_name('object'))
-	goal.position = map.map_to_world(pos) + Vector2(2,2)
+	goal.position = map.map_to_world(pos)
 
 func place_start():
 	var pos = Vector2(1, r(HEIGHT-1))
 	map.set_cellv(pos, tileset.find_tile_by_name('object'))
-	start.position = map.map_to_world(pos) + Vector2(2,2)
+	start.position = map.map_to_world(pos)
 
 func place_enemy():
 	var pos = Vector2(r(WIDTH-2)+1,r(HEIGHT-1))
 	map.set_cellv(pos, tileset.find_tile_by_name('object'))
-	enemy.position = map.map_to_world(pos) + Vector2(2,2)
+	enemy.position = map.map_to_world(pos)
 	
 func place_player():
 	player.position = start.position
