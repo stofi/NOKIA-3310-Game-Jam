@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=12 format=2]
 
-[ext_resource path="res://cable.png" type="Texture" id=1]
+[ext_resource path="res://Textures/cable.png" type="Texture" id=1]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 4, 0, 4, 4, 0, 4 )
@@ -177,7 +177,7 @@ points = PoolVector2Array( 0, 0, 4, 0, 4, 4, 0, 4 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 8/z_index = 0
-9/name = "cable_b"
+9/name = "cable_r"
 9/texture = ExtResource( 1 )
 9/tex_offset = Vector2( 0, 0 )
 9/modulate = Color( 1, 1, 1, 1 )

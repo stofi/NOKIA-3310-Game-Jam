@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="New Game Project"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Scenes/World.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -100,5 +100,4 @@ quality/reflections/high_quality_ggx=false
 quality/depth_prepass/enable=false
 quality/subsurface_scattering/weight_samples=false
 quality/depth/hdr=false
-environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

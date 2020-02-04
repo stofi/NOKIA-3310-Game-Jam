@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://cable_tiles.tres" type="TileSet" id=1]
+[ext_resource path="res://Tilesets/cable.tres" type="TileSet" id=1]
 
 [node name="Cable" type="TileMap"]
 tile_set = ExtResource( 1 )
